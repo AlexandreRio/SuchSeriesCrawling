@@ -1,3 +1,5 @@
+package data;
+
 import java.util.Date;
 
 /**
@@ -5,12 +7,16 @@ import java.util.Date;
  * attributes must be set
  *
  * @author Rio Alexandre
- * @version 1.0
+ * @version 0.0.1
  */
 public class Release {
 
   private String name;
+  private String seasonAndEpisode;
   private String quality;
+  private String source;
+  private String codec;
+  private boolean subtitled;
   private Date releaseDate;
   private String team;
 
@@ -22,11 +28,12 @@ public class Release {
    * @param releaseDate
    * @param team
    */
-  public Release(String name, String quality, Date releaseDate, String team) {
-    this.name        = name;
-    this.quality     = quality;
-    this.releaseDate = releaseDate;
-    this.team        = team;
+  public Release(String name, String seasonAndEpisode, String quality, Date releaseDate, String team) {
+    this.name             = name;
+    this.seasonAndEpisode = seasonAndEpisode;
+    this.quality          = quality;
+    this.releaseDate      = releaseDate;
+    this.team             = team;
   }
 
   /**
@@ -36,8 +43,8 @@ public class Release {
    * @param quality
    * @param releaseDate
    */
-  public Release(String name, String quality, Date releaseDate) {
-    this(name, quality, releaseDate, null);
+  public Release(String name, String seasonAndEpisode, String quality, Date releaseDate) {
+    this(name, seasonAndEpisode, quality, releaseDate, null);
   }
 
   /**
@@ -45,6 +52,13 @@ public class Release {
    */
   public String getName() {
     return name;
+  }
+
+  /**
+   * @return the seasonAndEpisode
+   */
+  public String getSeasonAndEpisode() {
+    return seasonAndEpisode;
   }
 
   /**
