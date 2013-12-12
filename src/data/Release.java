@@ -17,15 +17,26 @@ import net.mircomacrelli.rss.Item;
  */
 public class Release {
 
+  /** Name of the release, with spaces and uppercase. */
   private String name;
+  /** Season and episode of the release, match the regex S\dE\d. */
   private String seasonAndEpisode;
+  /** Quality of the release, 720p, 1080p or LD. */
   private String quality;
+  /** Source of the media, HDTV, BluRay or DVD. */
   private String source;
+  /** Video codec used for the release, usually x264. */
   private String codec;
+  /** If the release contains subtitle track. */
   private boolean subtitled;
+  /** UTC date of release. */
   private Date releaseDate;
+  /** Name of the team that publish this release. */
   private String team;
+  /** Name of the tracker of origin of the release. */
   private String tracker;
+  /** Percentage of validity of parsed information, {@see #validity()}. */
+  private int validity;
 
   public Release(String name, String seasonAndEpisode, String quality, String source, boolean subtitled, String codec, Date releaseDate, String team, String tracker) {
     this.name             = name;
@@ -37,8 +48,10 @@ public class Release {
     this.releaseDate      = releaseDate;
     this.team             = team;
     this.tracker          = tracker;
+    this.validity         = validity();
   }
 
+  @Override
   public String toString() {
     return
       "name: " + name +
@@ -50,9 +63,20 @@ public class Release {
       "\ndate: " + releaseDate +
       "\nteam: " + team +
       "\ntracker: " + tracker +
+      "\nvalidity: " + validity +
       "\n–––––––––––––––––––––––––––––––";
   }
 
+  /**
+   * Create a release for an item of a RSS feed and a tracker name.
+   *
+   * @param item Item of a RSS feed, it contains at least the complete name of
+   * the release and a UTC date.
+   * @param tkSource Name of the tracker of origin.
+   * @return Release representing the parsed information.
+   *
+   * @throws Exception If the release does not contain the pattern <pre>S\dE\d</pre>.
+   */
   public static Release parseItem(Item item, String tkSource) throws Exception {
     String fullName = item.getTitle();
     Pattern pattern = Pattern.compile("S\\d+E\\d+");
@@ -111,4 +135,29 @@ public class Release {
     return new Release(title, seasonAndEpisode, quality, source, subtitled, codec, date, team, tkSource);
   }
 
+  /**
+   * Compute the percentage validity of the release, a null for the source
+   * will decrease the percentage for example.
+   * On another hand the team is not a required attributes, it has no effect
+   * on the validity.
+   *
+   * @return The percentage of validity of the release.
+   */
+  public int validity() {
+    int neededAttributes    = 6;
+    int specifiedAttributes = 0;
+    if (name != null)
+      specifiedAttributes++;
+    if (quality!= null)
+      specifiedAttributes++;
+    if (source != null)
+      specifiedAttributes++;
+    if (codec != null)
+      specifiedAttributes++;
+    if (releaseDate != null)
+      specifiedAttributes++;
+    if (seasonAndEpisode != null)
+      specifiedAttributes++;
+    return (specifiedAttributes*100/neededAttributes);
+  }
 }
