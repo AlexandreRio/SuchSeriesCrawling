@@ -20,14 +20,14 @@ public class DiskAccess {
    * <pre>code rss_url</pre>
    * If a contains a mistake, like an invalid http form it is just skipped.
    *
-   * @see data.Messages#TK_FILE_PATH
+   * @see data.Settings#TK_FILE_PATH
    * @return List of valid Crawler instance.
    */
   public static List<Crawler> read() {
     Scanner s = null;
     List<Crawler> ret = new ArrayList<Crawler>();
     try {
-      s = new Scanner(new File(Messages.TK_FILE_PATH));
+      s = new Scanner(new File(Settings.TK_FILE_PATH));
     } catch (FileNotFoundException e) {
       System.err.println("File not found check your configuration!");
     }

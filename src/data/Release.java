@@ -1,12 +1,11 @@
 package data;
 
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import java.util.Date;
-
 import net.mircomacrelli.rss.Item;
+
+import org.joda.time.DateTime;
 
 /**
  * Representation of a release, the team is optional but all the others
@@ -30,7 +29,7 @@ public class Release {
   /** If the release contains subtitle track. */
   private boolean subtitled;
   /** UTC date of release. */
-  private Date releaseDate;
+  private DateTime releaseDate;
   /** Name of the team that publish this release. */
   private String team;
   /** Name of the tracker of origin of the release. */
@@ -38,7 +37,9 @@ public class Release {
   /** Percentage of validity of parsed information, {@see #validity()}. */
   private int validity;
 
-  public Release(String name, String seasonAndEpisode, String quality, String source, boolean subtitled, String codec, Date releaseDate, String team, String tracker) {
+  public Release(String name, String seasonAndEpisode, String quality,
+      String source, boolean subtitled, String codec, DateTime releaseDate,
+      String team, String tracker) {
     this.name             = name;
     this.seasonAndEpisode = seasonAndEpisode;
     this.quality          = quality;
@@ -75,7 +76,8 @@ public class Release {
    * @param tkSource Name of the tracker of origin.
    * @return Release representing the parsed information.
    *
-   * @throws Exception If the release does not contain the pattern <pre>S\dE\d</pre>.
+   * @throws Exception If the release does not contain the pattern
+   * <pre>S\dE\d</pre>.
    */
   public static Release parseItem(Item item, String tkSource) throws Exception {
     String fullName = item.getTitle();
@@ -84,14 +86,14 @@ public class Release {
     String title = null;
     String seasonAndEpisode = null;
     String information = null;
-    Date date = null;
-    System.out.println(item.getPublishDate());
     if (matcher.find())
       seasonAndEpisode = matcher.group(0);
     else
       throw new Exception("Invalid release name.");
 
     title = fullName.split(seasonAndEpisode)[0];
+    title = title.replace('.', ' ');
+    title = title.trim();
     information = fullName.split(seasonAndEpisode)[1];
     String team  = null;
     String quality;
@@ -132,7 +134,8 @@ public class Release {
     else
       codec = null;
 
-    return new Release(title, seasonAndEpisode, quality, source, subtitled, codec, date, team, tkSource);
+    return new Release(title, seasonAndEpisode, quality, source, subtitled,
+        codec, item.getPublishDate(), team, tkSource);
   }
 
   /**
@@ -159,5 +162,12 @@ public class Release {
     if (seasonAndEpisode != null)
       specifiedAttributes++;
     return (specifiedAttributes*100/neededAttributes);
+  }
+
+  /**
+   * @return the name
+   */
+  public String getName() {
+    return name;
   }
 }
