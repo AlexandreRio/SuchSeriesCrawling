@@ -37,6 +37,9 @@ public class Release {
   /** Percentage of validity of parsed information, {@see #validity()}. */
   private int validity;
 
+  /** Minimum number of attributes needed for releases. */
+  private static final int NEEDED_ATTRIBUTES = 6;
+
   public Release(String name, String seasonAndEpisode, String quality,
       String source, boolean subtitled, String codec, DateTime releaseDate,
       String team, String tracker) {
@@ -147,7 +150,6 @@ public class Release {
    * @return The percentage of validity of the release.
    */
   public int validity() {
-    int neededAttributes    = 6;
     int specifiedAttributes = 0;
     if (name != null)
       specifiedAttributes++;
@@ -161,7 +163,7 @@ public class Release {
       specifiedAttributes++;
     if (seasonAndEpisode != null)
       specifiedAttributes++;
-    return (specifiedAttributes*100/neededAttributes);
+    return (specifiedAttributes*100/NEEDED_ATTRIBUTES);
   }
 
   /**

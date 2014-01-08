@@ -30,7 +30,7 @@ public class Crawler implements Runnable {
   public Crawler(String name, String feed) throws MalformedURLException {
     this.name = name;
     this.feedURL = new URL(feed);
-    this.runner = new Thread(this, this.name);
+    this.runner  = new Thread(this, this.name);
   }
 
   /**

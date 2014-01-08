@@ -2,7 +2,9 @@ package data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.net.MalformedURLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +25,7 @@ public class DiskAccess {
    * @see data.Settings#TK_FILE_PATH
    * @return List of valid Crawler instance.
    */
-  public static List<Crawler> read() {
+  public static List<Crawler> readTrackerList() {
     Scanner s = null;
     List<Crawler> ret = new ArrayList<Crawler>();
     try {
@@ -43,4 +45,5 @@ public class DiskAccess {
     s.close();
     return ret;
   }
+
 }
