@@ -172,4 +172,67 @@ public class Release {
   public String getName() {
     return name;
   }
+
+  /**
+   * @return the seasonAndEpisode
+   */
+  public String getSeasonAndEpisode() {
+    return seasonAndEpisode;
+  }
+
+  /**
+   * @return the quality
+   */
+  public String getQuality() {
+    return quality;
+  }
+
+  /**
+   * @return the source
+   */
+  public String getSource() {
+    return source;
+  }
+
+  /**
+   * @return the codec
+   */
+  public String getCodec() {
+    return codec;
+  }
+
+  /**
+   * @return the subtitled
+   */
+  public boolean isSubtitled() {
+    return subtitled;
+  }
+
+  /**
+   * @return the releaseDate
+   */
+  public DateTime getReleaseDate() {
+    return releaseDate;
+  }
+
+  /**
+   * @return the team
+   */
+  public String getTeam() {
+    return team;
+  }
+
+  /**
+   * @return the tracker
+   */
+  public String getTracker() {
+    return tracker;
+  }
+
+  /**
+   * @return the validity
+   */
+  public int getValidity() {
+    return validity;
+  }
 }

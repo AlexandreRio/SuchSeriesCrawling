@@ -14,7 +14,7 @@ public class Launcher {
     //for (Crawler c : DiskAccess.readTrackerList())
     //  c.start();
 
-    Data.createDB();
+    Data.initDB();
 
     // For debugging purpose the program ends after some time
     try {
