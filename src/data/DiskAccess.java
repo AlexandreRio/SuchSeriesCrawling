@@ -35,8 +35,11 @@ public class DiskAccess {
     }
     while (s.hasNextLine()) {
       try {
-        String[] attributes = s.nextLine().split(" ");
-        ret.add(new Crawler(attributes[0], attributes[1]));
+        String line = s.nextLine();
+        if (!line.startsWith("#")) {
+          String[] attributes = line.split(" ");
+          ret.add(new Crawler(attributes[0], attributes[1]));
+        }
       } catch (MalformedURLException e) {
         //Skip this crawler
         continue;

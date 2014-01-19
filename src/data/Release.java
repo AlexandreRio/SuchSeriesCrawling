@@ -58,16 +58,16 @@ public class Release {
   @Override
   public String toString() {
     return
-      "name: " + name +
-      "\nSE: " + seasonAndEpisode +
-      "\nquality: " + quality +
-      "\nsource: " + source +
-      "\ncodec: " + codec +
-      "\nsubtitled: " + subtitled +
-      "\ndate: " + releaseDate +
-      "\nteam: " + team +
-      "\ntracker: " + tracker +
-      "\nvalidity: " + validity +
+      "name: "        + name             +
+      "\nSE: "        + seasonAndEpisode +
+      "\nquality: "   + quality          +
+      "\nsource: "    + source           +
+      "\ncodec: "     + codec            +
+      "\nsubtitled: " + subtitled        +
+      "\ndate: "      + releaseDate      +
+      "\nteam: "      + team             +
+      "\ntracker: "   + tracker          +
+      "\nvalidity: "  + validity         +
       "\n–––––––––––––––––––––––––––––––";
   }
 
@@ -98,14 +98,19 @@ public class Release {
     title = title.replace('.', ' ');
     title = title.trim();
     information = fullName.split(seasonAndEpisode)[1];
+    information = information.replace("WEB-DL", "WEBDL");
     String team  = null;
     String quality;
     String source;
     String codec;
     boolean subtitled = false;
 
-    if(information.contains("-"))
+    if(information.contains("-")) {
       team  = information.split("-")[1];
+      if (team.contains(" "))
+        team = team.split(" ")[0];
+    }
+
     if (information.contains("VOSTFR") || information.contains("MULTi"))
       subtitled = true;
 
@@ -136,6 +141,9 @@ public class Release {
       codec = "XviD";
     else
       codec = null;
+
+    if (tkSource.contains("_"))
+      tkSource = tkSource.split("_")[0];
 
     return new Release(title, seasonAndEpisode, quality, source, subtitled,
         codec, item.getPublishDate(), team, tkSource);

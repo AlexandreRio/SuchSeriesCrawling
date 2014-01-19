@@ -53,14 +53,16 @@ public class Crawler implements Runnable {
         r = Release.parseItem(item, this.name);
         if (firstSeen == null)
           firstSeen = r.getName();
-        if (this.lastSeenTitle == null)
-          this.lastSeenTitle = r.getName();
-        else if (this.lastSeenTitle.equals(r.getName()))
+
+        if (lastSeenTitle!=null && lastSeenTitle.equals(r.getName()))
           break;
-        else
-          Data.data.add(r);
+
+        if (r.getValidity() > Settings.VALIDITY_THRESHOLD)
+          DB.insertRelease(r);
+
       } catch (Exception e) {
         // Simply skip this release
+        System.out.println("Skip release: " + name + " " + e.getMessage());
       }
     }
     this.lastSeenTitle = firstSeen;

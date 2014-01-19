@@ -11,6 +11,6 @@ You have to create a file under `res/` containing your tracker information.
 
 The default ( set in `src/Settings.java`) is `tk.db`.
 
-Every line as to much the following pattern:
+Every line as to match the following pattern:
 
     TRACKER_NAME TRACKER_RSS_URL
