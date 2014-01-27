@@ -1,3 +1,4 @@
 bin/
 res/*.data
 res/*.db
+.*
