@@ -16,10 +16,11 @@ public class Launcher {
       c.start();
 
     // For debugging purpose the program ends after some time
-    try {
-      Thread.sleep(20000);
-    } catch (Exception e) {
+    if (args.length == 1 && args[0].equals("-d")) {
+      try {
+        Thread.sleep(20000);
+      } catch (Exception e) {}
+      System.exit(0);
     }
-    System.exit(0);
   }
 }

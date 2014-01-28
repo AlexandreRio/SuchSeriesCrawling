@@ -57,13 +57,12 @@ public class DB {
     }
   }
 
-  //Does it has to be synchronized ?
   /**
    * Insert a release in the database.
    *
    * @param r : Release to insert in the database
    */
-  public static void insertRelease(Release r) {
+  public synchronized static void insertRelease(Release r) {
     Connection connection = null;
     Statement statement = null;
     PreparedStatement pstmt = null;
