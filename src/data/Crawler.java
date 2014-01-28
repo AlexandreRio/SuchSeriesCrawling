@@ -77,8 +77,7 @@ public class Crawler implements Runnable {
         URLConnection conn = this.feedURL.openConnection();
         RSS feed = factory.parse(conn.getInputStream());
         storeRelease(feed);
-        //TODO wait ~5 or 10 minutes
-        Thread.sleep(10*1000);
+        Thread.sleep(Settings.CRAWLER_WAITING_TIME);
       } catch (IOException e) {
         System.err.println("IO error");
       } catch (ParserException e) {
