@@ -13,7 +13,8 @@ import java.util.Calendar;
 public class DB {
 
   /**
-   *
+   * Check if the database exists, if not it is created.
+   * @see #createDB()
    */
   public static void initDB() {
     File dbFile = new File(Settings.DB_PATH);
@@ -21,6 +22,9 @@ public class DB {
       DB.createDB();
   }
 
+  /**
+   * Re-create the database, be careful, all stored information will be lost.
+   */
   private static void createDB() {
     System.out.println("Creating db");
     Connection connection = null;

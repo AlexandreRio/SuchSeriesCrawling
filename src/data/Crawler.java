@@ -14,7 +14,7 @@ import net.mircomacrelli.rss.RSSFactory;
  *
  *
  * @author Rio Alexandre
- * @version 0.1
+ * @version 0.0.1
  */
 public class Crawler implements Runnable {
 
@@ -24,7 +24,10 @@ public class Crawler implements Runnable {
   private String name;
   /** Feed URL of a particular website. */
   private URL feedURL;
-  /** */
+  /**
+   * Name of the last release seen by the crawler, used to stop parsing at
+   * the right time after an update.
+   */
   private String lastSeenTitle;
 
   public Crawler(String name, String feed) throws MalformedURLException {
@@ -41,9 +44,10 @@ public class Crawler implements Runnable {
   }
 
   /**
+   * Parse the feed and get {@link data.Release Releases}, if the release is
+   * valid it is added to the database, if it is not the release is ignored.
    *
-   *
-   * @param feed :
+   * @param feed : RSS feed containing release to store.
    */
   public void storeRelease(RSS feed) {
     Release r;
@@ -79,9 +83,9 @@ public class Crawler implements Runnable {
         storeRelease(feed);
         Thread.sleep(Settings.CRAWLER_WAITING_TIME);
       } catch (IOException e) {
-        System.err.println("IO error");
+        System.err.println("IO error in crawler: " + this.name);
       } catch (ParserException e) {
-        System.err.println("Paser error");
+        System.err.println("Paser error in crawler: " + this.name);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
