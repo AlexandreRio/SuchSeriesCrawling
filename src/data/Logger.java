@@ -31,16 +31,16 @@ public abstract class Logger {
    * @param isError : If true the message is logged in a different file that it
    * would be if failse.
    */
-  private static void log(String toLog, boolean isError) {
+  private synchronized static void log(String toLog, boolean isError) {
     String print = (new Date()).toString();
-    print.concat(" : " + toLog);
+    print += " : " + toLog + "\n";
     String filePath;
     if (isError)
       filePath = Settings.ERROR_LOG_PATH;
     else
       filePath = Settings.LOG_PATH;
     try {
-      FileWriter writer = new FileWriter(filePath);
+      FileWriter writer = new FileWriter(filePath, true);
       writer.append(print);
       writer.close();
     } catch (IOException e) {

@@ -26,7 +26,7 @@ public class DB {
    * Re-create the database, be careful, all stored information will be lost.
    */
   private static void createDB() {
-    System.out.println("Creating db");
+    Logger.log("Creating new database.");
     Connection connection = null;
     Statement statement = null;
 
@@ -47,7 +47,7 @@ public class DB {
     }
     catch(Exception e)
     {
-      System.err.println(e.getMessage());
+      Logger.logError(e.getMessage());
     }finally {
       try
       {
@@ -56,7 +56,7 @@ public class DB {
       }
       catch(SQLException e)
       {
-        System.err.println(e);
+        Logger.logError(e.getMessage());
       }
     }
   }
@@ -106,7 +106,7 @@ public class DB {
     }
     catch(Exception e)
     {
-      System.err.println(e.getMessage());
+      Logger.logError(e.getMessage());
     }
     finally
     {
@@ -117,7 +117,7 @@ public class DB {
       }
       catch(SQLException e)
       {
-        System.err.println(e);
+        Logger.logError(e.getMessage());
       }
     }
   }
