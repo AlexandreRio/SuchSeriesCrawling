@@ -82,6 +82,7 @@ public class Release {
    * @throws Exception If the release does not contain the pattern
    * <pre>S\dE\d</pre>.
    */
+  //TODO Use enumeration for accepted codec, source etc
   public static Release parseItem(Item item, String tkSource) throws Exception {
     String fullName = item.getTitle();
     Pattern pattern = Pattern.compile("S\\d+E\\d+");
@@ -94,11 +95,9 @@ public class Release {
     else
       throw new Exception("Invalid release name.");
 
+    fullName = replacePatterns(fullName);
     title = fullName.split(seasonAndEpisode)[0];
-    title = title.replace('.', ' ');
-    title = title.trim();
     information = fullName.split(seasonAndEpisode)[1];
-    information = information.replace("WEB-DL", "WEBDL");
     String team  = null;
     String quality;
     String source;
@@ -147,6 +146,19 @@ public class Release {
 
     return new Release(title, seasonAndEpisode, quality, source, subtitled,
         codec, item.getPublishDate(), team, tkSource);
+  }
+
+  /**
+   * Replace various patterns to homogenize names.
+   *
+   * @param fullName : String to clear
+   */
+  private static String replacePatterns(String fullName) {
+    fullName.replace("\\[\\w*\\]", "");
+    fullName = fullName.replace('.', ' ');
+    fullName = fullName.trim();
+    fullName = fullName.replace("WEB-DL", "WEBDL");
+    return fullName;
   }
 
   /**

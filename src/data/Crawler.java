@@ -80,7 +80,7 @@ public class Crawler implements Runnable {
       try {
         URLConnection conn = this.feedURL.openConnection();
         RSS feed = factory.parse(conn.getInputStream());
-        storeRelease(feed);
+        this.storeRelease(feed);
         Thread.sleep(Settings.CRAWLER_WAITING_TIME);
       } catch (IOException e) {
         System.err.println("IO error in crawler: " + this.name);
