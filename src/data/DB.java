@@ -26,7 +26,7 @@ public class DB {
    * Re-create the database, be careful, all stored information will be lost.
    */
   private static void createDB() {
-    System.out.println("Creating db");
+    Logger.log("Creating new database.");
     Connection connection = null;
     Statement statement = null;
 
@@ -47,7 +47,7 @@ public class DB {
     }
     catch(Exception e)
     {
-      System.err.println(e.getMessage());
+      Logger.logError(e.getMessage());
     }finally {
       try
       {
@@ -56,7 +56,7 @@ public class DB {
       }
       catch(SQLException e)
       {
-        System.err.println(e);
+        Logger.logError(e.getMessage());
       }
     }
   }
@@ -88,7 +88,7 @@ public class DB {
       Date addDate = new java.sql.Date((currenttime.getTime()).getTime());
 
 
-      String query = "insert into " + Settings.DB_COLUMN_RELEASE + " (name, " +
+      String query = "insert into " + Settings.DB_TABLE_RELEASE + " (name, " +
         "quality, seasonEpisode, source, codec, subtitled, releaseDate, addDate, " +
         "idTracker, idTeam) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       pstmt = connection.prepareStatement(query);
@@ -106,7 +106,7 @@ public class DB {
     }
     catch(Exception e)
     {
-      System.err.println(e.getMessage());
+      Logger.logError(e.getMessage());
     }
     finally
     {
@@ -117,7 +117,7 @@ public class DB {
       }
       catch(SQLException e)
       {
-        System.err.println(e);
+        Logger.logError(e.getMessage());
       }
     }
   }
@@ -133,15 +133,15 @@ public class DB {
    */
   private static int getTeamId(Statement statement, String teamName) throws SQLException {
     int id = -1;
-    ResultSet resultSet = statement.executeQuery("select id from " + Settings.DB_COLUMN_TEAM + " where name like '"
+    ResultSet resultSet = statement.executeQuery("select id from " + Settings.DB_TABLE_TEAM + " where name like '"
         + teamName + "' limit 1"); // SQL injection ?
     if (resultSet.next()) {
       id = resultSet.getInt(1);
     }
     else {
-      statement.executeUpdate("insert into " + Settings.DB_COLUMN_TEAM + " (name) values ('" + teamName + "')");
+      statement.executeUpdate("insert into " + Settings.DB_TABLE_TEAM + " (name) values ('" + teamName + "')");
       //Now there is a field
-      resultSet = statement.executeQuery("select id from " + Settings.DB_COLUMN_TEAM + " where name like '"
+      resultSet = statement.executeQuery("select id from " + Settings.DB_TABLE_TEAM + " where name like '"
           + teamName + "'"); // SQL injection ?
       if (resultSet.next())
         id = resultSet.getInt(1);
@@ -160,15 +160,15 @@ public class DB {
    */
   private static int getTrackerId(Statement statement, String trackerName) throws SQLException {
     int id = -1;
-    ResultSet resultSet = statement.executeQuery("select id from " + Settings.DB_COLUMN_TRACKER + " where name like '"
+    ResultSet resultSet = statement.executeQuery("select id from " + Settings.DB_TABLE_TRACKER + " where name like '"
         + trackerName + "' limit 1"); // SQL injection ?
     if (resultSet.next()) {
       id = resultSet.getInt(1);
     }
     else {
-      statement.executeUpdate("insert into " + Settings.DB_COLUMN_TRACKER + " (name) values ('" + trackerName + "')");
+      statement.executeUpdate("insert into " + Settings.DB_TABLE_TRACKER + " (name) values ('" + trackerName + "')");
       //Now there is a field
-      resultSet = statement.executeQuery("select id from " + Settings.DB_COLUMN_TRACKER + " where name like '"
+      resultSet = statement.executeQuery("select id from " + Settings.DB_TABLE_TRACKER + " where name like '"
           + trackerName + "'"); // SQL injection ?
       if (resultSet.next())
         id = resultSet.getInt(1);

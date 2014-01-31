@@ -2,3 +2,4 @@ bin/
 res/*.data
 res/*.db
 .*
+*.log

@@ -31,7 +31,7 @@ public class DiskAccess {
     try {
       s = new Scanner(new File(Settings.TK_FILE_PATH));
     } catch (FileNotFoundException e) {
-      System.err.println("File not found check your configuration!");
+      Logger.logError("File not found check your configuration!");
     }
     while (s.hasNextLine()) {
       try {

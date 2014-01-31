@@ -1,8 +1,7 @@
 import data.Crawler;
+import data.Logger;
 import data.DB;
 import data.DiskAccess;
-
-import java.util.Date;
 
 /**
  *
@@ -13,7 +12,7 @@ import java.util.Date;
 public class Launcher {
 
   public static void main(String... args) {
-    System.out.println("Start time: " + (new Date()).toString());
+    Logger.log("Starting...");
     DB.initDB();
     for (Crawler c : DiskAccess.readTrackerList())
       c.start();
@@ -23,7 +22,7 @@ public class Launcher {
       try {
         Thread.sleep(20*1000);
       } catch (Exception e) {}
-      System.out.println("End time: " + (new Date()).toString());
+      Logger.log("Application is shuting down");
       System.exit(0);
     }
   }

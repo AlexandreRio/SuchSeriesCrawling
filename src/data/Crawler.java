@@ -61,12 +61,15 @@ public class Crawler implements Runnable {
         if (lastSeenTitle!=null && lastSeenTitle.equals(r.getName()))
           break;
 
-        if (r.getValidity() > Settings.VALIDITY_THRESHOLD)
+        if (r.getValidity() > Settings.VALIDITY_THRESHOLD) {
+          //This gonna be verbose
+          Logger.log("Insert release: " + r.getName());
           DB.insertRelease(r);
+        }
 
       } catch (Exception e) {
         // Simply skip this release
-        System.out.println("Skip release: " + name + " " + e.getMessage());
+        Logger.log("Skip release: " + name + " " + e.getMessage());
       }
     }
     this.lastSeenTitle = firstSeen;
@@ -75,7 +78,7 @@ public class Crawler implements Runnable {
   @Override
   public void run() {
     while (true) {
-      System.out.println("Connecting to " + this.name);
+      Logger.log("Connecting to " + this.name);
       RSSFactory factory = RSSFactory.newFactory();
       try {
         URLConnection conn = this.feedURL.openConnection();
@@ -83,9 +86,9 @@ public class Crawler implements Runnable {
         this.storeRelease(feed);
         Thread.sleep(Settings.CRAWLER_WAITING_TIME);
       } catch (IOException e) {
-        System.err.println("IO error in crawler: " + this.name);
+        Logger.logError("IO error in crawler: " + this.name);
       } catch (ParserException e) {
-        System.err.println("Paser error in crawler: " + this.name);
+        Logger.logError("Paser error in crawler: " + this.name);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
