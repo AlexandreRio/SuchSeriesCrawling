@@ -57,18 +57,16 @@ public class Release {
 
   @Override
   public String toString() {
-    return
-      "name: "        + name             +
-      "\nSE: "        + seasonAndEpisode +
-      "\nquality: "   + quality          +
-      "\nsource: "    + source           +
-      "\ncodec: "     + codec            +
-      "\nsubtitled: " + subtitled        +
-      "\ndate: "      + releaseDate      +
-      "\nteam: "      + team             +
-      "\ntracker: "   + tracker          +
-      "\nvalidity: "  + validity         +
-      "\n–––––––––––––––––––––––––––––––";
+    String ret = name;
+    ret += " " + seasonAndEpisode;
+    if (subtitled)
+      ret += " " + "VOSTFR";
+    ret += " " + quality;
+    ret += " " + source;
+    ret += " " + codec;
+    if (team != null)
+      ret += "-" + team;
+    return ret;
   }
 
   /**

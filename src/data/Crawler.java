@@ -56,14 +56,14 @@ public class Crawler implements Runnable {
       try {
         r = Release.parseItem(item, this.name);
         if (firstSeen == null)
-          firstSeen = r.getName();
+          firstSeen = r.toString();
 
-        if (lastSeenTitle!=null && lastSeenTitle.equals(r.getName()))
+        if (lastSeenTitle!=null && lastSeenTitle.equals(r.toString()))
           break;
 
         if (r.getValidity() > Settings.VALIDITY_THRESHOLD) {
           //This gonna be verbose
-          Logger.log("Insert release: " + r.getName());
+          Logger.log("Insert release: " + r);
           DB.insertRelease(r);
         }
 
