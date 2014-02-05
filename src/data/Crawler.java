@@ -84,13 +84,17 @@ public class Crawler implements Runnable {
         URLConnection conn = this.feedURL.openConnection();
         RSS feed = factory.parse(conn.getInputStream());
         this.storeRelease(feed);
-        Thread.sleep(Settings.CRAWLER_WAITING_TIME);
       } catch (IOException e) {
         Logger.logError("IO error in crawler: " + this.name);
       } catch (ParserException e) {
         Logger.logError("Paser error in crawler: " + this.name);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+      }
+      finally {
+        try {
+          Thread.sleep(Settings.CRAWLER_WAITING_TIME);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
